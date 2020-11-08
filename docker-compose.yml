@@ -1,0 +1,23 @@
+# docker-compose.yml
+version: "3"
+services:
+  vue_app:
+    image: node:lts-alpine
+    working_dir: /home/node/vue_app
+    environment:
+    #   VUE_APP_API: api:3001/api
+      NODE_ENV: development
+      PORT: 3000
+      VIRTUAL_HOST: dev.estyles.nl
+      VIRTUAL_PORT: 3000
+      LETSENCRYPT_HOST: dev.estyles.nl
+      LETSENCRYPT_EMAIL: evertschone@gmail.nl
+    volumes:
+      - ./:/home/node/vue_app
+    ports:
+      - "3000:3000"
+    command: /bin/sh -c "npm run serve"
+networks:
+  default:
+    external:
+      name: nginx-proxy
